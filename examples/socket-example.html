@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.0/socket.io.js"></script>
     <script>
         const socket = io(
-            'https://api.widgets.volleystation.com',
+            'https://api.widgets.volleystation.com:443',
             {
                 path: '/socket.io',
                 transports: [
@@ -19,7 +19,7 @@
                 reconnectionDelayMax: 5000,
                 reconnectionAttempts: 1 / 0,
                 query: {
-                    connectionPathName: '/court/2125287',
+                    connectionPathName: '/play-by-play/2125302',
                     token: 'PhodQuahof1ShmunWoifdedgasvuipki'
                 }
             }
