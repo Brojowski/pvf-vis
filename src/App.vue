@@ -2,9 +2,11 @@
 import SetScore from './components/SetScore.vue'
 import {data} from './socket_event_ex.js'
 import {VuePlotly} from 'vue3-plotly'
+import PlayerEfficiency from "@/components/PlayerEfficiency.vue";
 
 export default {
   components: {
+    PlayerEfficiency,
     VuePlotly
   },
   data() {
@@ -16,7 +18,6 @@ export default {
   },
   methods: {
     setScore(set) {
-
       return {
         data: [
           {
@@ -37,10 +38,14 @@ export default {
 </script>
 
 <template>
+  <!--
   <div class="match">
     <VuePlotly v-for="set in sets" :data="setScore(set)" :layout="{title: 'Set #'}" :displayModeBar="true"/>
-
   </div>
+  -->
+
+  <PlayerEfficiency player-team="*" player-number="14" :set-data="sets" />
+
 </template>
 
 <style scoped>
