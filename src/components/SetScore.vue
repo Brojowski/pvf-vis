@@ -6,11 +6,13 @@ export default {
     VuePlotly
   },
   props: ['match'],
+  computed: {
+    sets() {
+      return this.match['fullScoutData']['scout']['sets']
+    }
+  },
   data() {
     return {
-      max: 40,
-      sections: [2, 5, 10, 15],
-      sets: this.match['fullScoutData']['scout']['sets']
     }
   },
   methods: {

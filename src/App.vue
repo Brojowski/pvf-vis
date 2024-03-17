@@ -1,10 +1,18 @@
 <script>
 import {prerecordedMatch} from './socket_event_ex.js'
+import util from './util.js'
 import {VuePlotly} from 'vue3-plotly'
 import SetScore from "@/components/SetScore.vue";
+import PlayerEfficiency from "@/components/PlayerEfficiency.vue";
 
 export default {
+  computed: {
+    touches() {
+      return util.touches(this.match)
+    },
+  },
   components: {
+    PlayerEfficiency,
     SetScore,
     VuePlotly
   },
@@ -18,13 +26,13 @@ export default {
   },
   data() {
     return {
-      max: 40,
-      sections: [2, 5, 10, 15],
+      liveMatchId: '2125305',
       match: prerecordedMatch,
     }
   },
   methods: {
     startSocket() {
+      console.log('start socket:', this.liveMatchId)
       const socket = io(
           'https://api.widgets.volleystation.com:443',
           {
@@ -37,7 +45,7 @@ export default {
             reconnectionDelayMax: 5000,
             reconnectionAttempts: 1 / 0,
             query: {
-              connectionPathName: '/play-by-play/2125302',
+              connectionPathName: '/play-by-play/' + this.liveMatchId,
               token: 'PhodQuahof1ShmunWoifdedgasvuipki'
             }
           }
@@ -45,7 +53,7 @@ export default {
       socket.on("widget/play-by-play updated", this.updatePlayByPlay);
     },
     updatePlayByPlay(data) {
-      console.log(data)
+      console.log("widget/play-by-play updated", data)
       this.match = data
       this.sets = data['fullScoutData']['scout']['sets']
     },
@@ -54,8 +62,10 @@ export default {
 </script>
 
 <template>
+  <input :value="this.liveMatchId" @change="startSocket()"/>
   <div class="match">
     <SetScore :match="match" class="set-score"/>
+    <PlayerEfficiency :touches="touches" />
   </div>
 </template>
 
